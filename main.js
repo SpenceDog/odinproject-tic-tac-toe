@@ -1,6 +1,12 @@
 playerOneTurn = true;
 drawChar = "X";
+gameOver = false;
 
+var GameBoard = [
+    [0, 1, 2],
+    [0, 1, 2],
+    [0, 1, 2]
+];
 
 function MakeBoard(){
     for (let i = 0; i < 3; i++){
@@ -26,6 +32,7 @@ function ClickMe(row, column){ // Marks the cells.
     if(cellClicked.childNodes.length === 0){
         cellClicked.innerHTML = drawChar;
     }
+    UpdateArray(row, column, drawChar) // Updates the array so we can check for a win condition.
     SwitchTurn() // Once the turn is played, we call this to switch the turn.
 }
 
@@ -37,5 +44,16 @@ function SwitchTurn(){ // Switches the current turn.
     }
     if(playerOneTurn == false){
         drawChar = "O";
+    }
+}
+
+function UpdateArray(row, column, drawChar){
+    GameBoard[row][column] = drawChar;
+    GameBoard.forEach(v=>console.log(...v));
+
+    for (let i = 0; i < 3; i++){
+        if(GameBoard[i][0] == GameBoard[i][1] && GameBoard[i][1] == GameBoard[i][2]){
+        alert("Done");
+        }
     }
 }
