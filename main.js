@@ -3,9 +3,9 @@ drawChar = "X";
 gameOver = false;
 
 var GameBoard = [
-    [0, 1, 2],
-    [0, 1, 2],
-    [0, 1, 2]
+    ["0-0", "0-1", "0-2"],
+    ["1-0", "1-1", "1-2"],
+    ["2-0", "2-1", "2-2"]
 ];
 
 function MakeBoard(){
@@ -51,9 +51,31 @@ function UpdateArray(row, column, drawChar){
     GameBoard[row][column] = drawChar;
     GameBoard.forEach(v=>console.log(...v));
 
-    for (let i = 0; i < 3; i++){
+    for (let i = 0; i < 3; i++){ // Checks for horizontal win.
         if(GameBoard[i][0] == GameBoard[i][1] && GameBoard[i][1] == GameBoard[i][2]){
-        alert("Done");
+            gameOver = true;
         }
     }
+
+    for (let i = 0; i < 3; i++){ // Checks for vertical win.
+        if(GameBoard[0][i] == GameBoard[1][i] && GameBoard[1][i] == GameBoard[2][i]){
+            gameOver = true;
+        }
+    }
+    
+    if(GameBoard[0][0] == GameBoard[1][1] && GameBoard[1][1] == GameBoard[2][2]){
+        gameOver = true;
+    }
+
+    if(GameBoard[0][2] == GameBoard[1][1] && GameBoard[1][1] == GameBoard[2][0]){
+        gameOver = true;
+    }
+
+    if(gameOver == true){
+        GameOver();
+    }
+}
+
+function GameOver(){
+    alert("Somebody won! I need to figure out how to get this to say the right thing.")
 }
