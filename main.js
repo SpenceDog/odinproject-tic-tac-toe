@@ -1,11 +1,15 @@
 playerOneTurn = true;
 drawChar = "X";
 gameOver = false;
+playerOneWins = null;
+
+var playerOne = "";
+var playerTwo = "";
 
 var GameBoard = [
-    ["0-0", "0-1", "0-2"],
-    ["1-0", "1-1", "1-2"],
-    ["2-0", "2-1", "2-2"]
+    [null, null, null],
+    [null, null, null],
+    [null, null, null]
 ];
 
 function MakeBoard(){
@@ -20,6 +24,13 @@ function MakeBoard(){
         rowOut += "</tr>"; // Append to end of string.
         document.getElementById("GameTable").innerHTML += rowOut; // Print table row.
     }
+
+    SetUserNames();
+}
+
+function SetUserNames(){
+    playerOne = prompt('Player One Name:');
+    playerTwo = prompt('Player Two Name:');
 }
 
 function PrintTD(row, column){ // CReates string for each cell.
@@ -27,13 +38,15 @@ function PrintTD(row, column){ // CReates string for each cell.
 }
 
 function ClickMe(row, column){ // Marks the cells.
-    cellClicked = document.getElementById(row + "-" + column);
+    if(playerOneWins == null){
+        cellClicked = document.getElementById(row + "-" + column);
 
-    if(cellClicked.childNodes.length === 0){
-        cellClicked.innerHTML = drawChar;
+        if(cellClicked.childNodes.length === 0){
+            cellClicked.innerHTML = drawChar;
+        }
+        UpdateArray(row, column, drawChar) // Updates the array so we can check for a win condition.
+        SwitchTurn() // Once the turn is played, we call this to switch the turn.
     }
-    UpdateArray(row, column, drawChar) // Updates the array so we can check for a win condition.
-    SwitchTurn() // Once the turn is played, we call this to switch the turn.
 }
 
 function SwitchTurn(){ // Switches the current turn.
@@ -53,22 +66,34 @@ function UpdateArray(row, column, drawChar){
 
     for (let i = 0; i < 3; i++){ // Checks for horizontal win.
         if(GameBoard[i][0] == GameBoard[i][1] && GameBoard[i][1] == GameBoard[i][2]){
-            gameOver = true;
+            if(GameBoard[i][0] != null){
+                gameOver = true;
+                CheckWinner(i, 0);
+            }
         }
     }
 
     for (let i = 0; i < 3; i++){ // Checks for vertical win.
         if(GameBoard[0][i] == GameBoard[1][i] && GameBoard[1][i] == GameBoard[2][i]){
-            gameOver = true;
+            if(GameBoard[0][i] != null){
+                gameOver = true;
+                CheckWinner(0, i);
+            }
         }
     }
     
     if(GameBoard[0][0] == GameBoard[1][1] && GameBoard[1][1] == GameBoard[2][2]){
-        gameOver = true;
+        if(GameBoard[0][0] != null){
+            gameOver = true;
+            CheckWinner(0, 0);
+        }
     }
 
     if(GameBoard[0][2] == GameBoard[1][1] && GameBoard[1][1] == GameBoard[2][0]){
-        gameOver = true;
+        if(GameBoard[0][2] != null){
+            gameOver = true;
+            CheckWinner(0, 2);
+        }
     }
 
     if(gameOver == true){
@@ -76,6 +101,20 @@ function UpdateArray(row, column, drawChar){
     }
 }
 
+function CheckWinner(row, column){
+    if(GameBoard[row][column] == "X"){
+        playerOneWins = true;
+    }
+    if(GameBoard[row][column] == "O"){
+        playerOneWins = false;
+    }
+}
+
 function GameOver(){
-    alert("Somebody won! I need to figure out how to get this to say the right thing.")
+    if(playerOneWins == true){
+        alert(playerOne + " Wins!");
+    }
+    if(playerOneWins == false){
+        alert(playerTwo + " Wins!");
+    }
 }

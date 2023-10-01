@@ -1,29 +1,6 @@
 h1{
     font-size: 60pt;
-}
-
-h2{
-
-}
-
-h3{
-
-}
-
-h4{
-
-}
-
-h5{
-
-}
-
-h6{
-
-}
-
-p{
-
+    text-align: center;
 }
 
 h1, h2, h3, h4, h5, h6, p{
@@ -35,10 +12,6 @@ body{
     background-color: darkslategrey;
     margin-left: auto;
     margin-right: auto;
-}
-
-#TitleText{
-    text-align: center;
 }
 
 table{
