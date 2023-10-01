@@ -96,6 +96,14 @@ function UpdateArray(row, column, drawChar){
         }
     }
 
+    if(GameBoard[0][0] != null & GameBoard[0][1] != null & GameBoard[0][2] != null){
+        if(GameBoard[1][0] != null & GameBoard[1][1] != null & GameBoard[1][2] != null){
+            if(GameBoard[2][0] != null & GameBoard[2][1] != null & GameBoard[2][2] != null){
+                GameOverTie();
+            }
+        }
+    }
+
     if(gameOver == true){
         GameOver();
     }
@@ -117,4 +125,9 @@ function GameOver(){
     if(playerOneWins == false){
         alert(playerTwo + " Wins!");
     }
+}
+
+function GameOverTie(){
+    alert("Tie!");
+    playerOneWins = true;
 }
